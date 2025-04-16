@@ -27,12 +27,6 @@ function processYargs(): Superluminal.Args {
         alias: 's',
         type: 'string',
       },
-      graphql: {
-        describe: 'Generate graphql field annotations?',
-        default: true,
-        type: 'boolean',
-        alias: 'g',
-      },
       output: {
         describe: 'Relative directory to place the output',
         default: './ftl/entities',
@@ -42,7 +36,7 @@ function processYargs(): Superluminal.Args {
     })
     .help();
 
-  const { host, port, schemas, database, output, graphql } = argv;
+  const { host, port, schemas, database, output } = argv;
 
   return {
     host,
@@ -50,7 +44,6 @@ function processYargs(): Superluminal.Args {
     schemas,
     database,
     output,
-    graphql,
   };
 }
 

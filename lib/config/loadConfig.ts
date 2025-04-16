@@ -12,7 +12,7 @@ export default async (): Promise<Superluminal.Config> => {
   const cwd = process.cwd();
   try {
     // eslint-disable-next-line
-    configFunction = require(resolve(cwd, '.ftlrc.ts')).default;
+    configFunction = require(resolve(cwd, '.oortrc.ts')).default;
     if (configFunction) {
       return await configFunction();
     }
@@ -20,7 +20,7 @@ export default async (): Promise<Superluminal.Config> => {
 
   if (!configFunction) {
     try {
-      configFunction = require(resolve(cwd, '.ftlrc.js'));
+      configFunction = require(resolve(cwd, '.oortrc.js'));
     } catch (err) {}
   }
 

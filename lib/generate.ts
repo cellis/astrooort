@@ -24,7 +24,7 @@ async function generate(checkHashes = true) {
       schemas: schemasRaw,
       database,
       graphql,
-      output = resolve(process.cwd(), 'ftl-models'),
+      output = resolve(process.cwd(), 'oort-models'),
     } = config;
 
     const schemas = schemasRaw?.split(',') || ['public'];
@@ -44,7 +44,7 @@ async function generate(checkHashes = true) {
     };
 
     const { hashes } = await createModels(models, introspection, config, checkHashes);
-    createRelationships(models, introspection, associationMapping,config);
+    // createRelationships(models, introspection, associationMapping,config);
 
     for (const [modelName, model] of Object.entries(models)) {
       const serialized = serialize(

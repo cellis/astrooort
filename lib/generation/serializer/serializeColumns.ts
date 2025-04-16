@@ -2,7 +2,6 @@ import resolveType, {
   normalizeDefaultValue,
   resolveColumnType,
 } from '../resolveType';
-import resolveTypeGraphqlType from '../resolveTypeGraphqlType';
 import { getColumnName } from './utils';
 const serializeColumn = (
   column: Superluminal.Column,
@@ -47,18 +46,11 @@ const serializeColumn = (
 
   const nullType = column.nullable ? ' | null' : '';
   // prettier-ignore
-  const resolvedGraphqlType = resolveTypeGraphqlType(column);
-  const graphqlReturn = resolvedGraphqlType.length
-    ? `() => ${resolvedGraphqlType}`
-    : '';
 
   let serialized: string[];
 
   if (column.primary && resolveType(column.dataType) === 'number') {
     serialized = [
-      options?.graphql ? `  @Field(${graphqlReturn}${
-        column.nullable ? ',{ nullable: true }' : ''
-      })` : '',
       '  @PrimaryGeneratedColumn()',
       `  ${normalizedColumnName}: ${resolveType(
         column.dataType,
@@ -68,9 +60,6 @@ const serializeColumn = (
     
   } else {
     serialized = [
-      options?.graphql ? `  @Field(${graphqlReturn}${
-        column.nullable ? ',{ nullable: true }' : ''
-      })` : '',
       `  @Column('${resolveColumnType(column.dataType)}', {`,
       `    ${columnBody.join(', ')},`,
       '  })',

@@ -3,8 +3,8 @@ const ignorePatterns = [
   '<rootDir>/lib/test/fixtures',
   '<rootDir>/dist/',
   '<rootDir>/lib/scripts',
-  '<rootDir>/.ftlrc.js',
-  '<rootDir>/.ftlrc.ts',
+  '<rootDir>/.oortrc.js',
+  '<rootDir>/.oortrc.ts',
 ];
 
 module.exports = {

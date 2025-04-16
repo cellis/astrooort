@@ -1,5 +1,5 @@
 export default async () => {
-  const config: Superluminal.Config = {
+  const config = {
     
   };
 

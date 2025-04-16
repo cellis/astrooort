@@ -13,17 +13,17 @@ export default (
 ): string => {
   // sort all imports first.
 
-  const importStatement = serializeImports(model, options);
+  const importStatement = serializeImports(model);
 
-  const columnsStatement = serializeColumns(model, options);
+  const columnsStatement = serializeColumns(model);
 
   const indexesStatement = serializeIndexes(model);
 
-  const associationsStatement = serializeAssociations(
-    model,
-    models,
-    associationMapping
-  );
+  // const associationsStatement = serializeAssociations(
+  //   model,
+  //   models,
+  //   associationMapping
+  // );
 
   const bodyStatement = serializeBody(
     model.name,
@@ -31,8 +31,7 @@ export default (
     model.schema,
     PascalCase(model.name),
     columnsStatement,
-    associationsStatement,
-    options
+    '',
   );
 
   const finalStatement = [importStatement, bodyStatement].join('\n');

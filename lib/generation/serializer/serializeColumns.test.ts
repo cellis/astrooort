@@ -57,61 +57,51 @@ describe('serializeColumns', () => {
       it('serializes the @Field to be nullable too', () => {
         expect(serializeColumns(User, { graphql: true }))
           .toMatchInlineSnapshot(`
-          "  @Field(() => Boolean,{ nullable: true })
-            @Column('boolean', {
+          "  @Column('boolean', {
               name: 'connected', nullable: true,
             })
             connected: boolean | null;
 
-            @Field(() => Date,{ nullable: true })
             @Column('timestamp with time zone', {
               name: 'created_at', nullable: true, default: () => 'now()',
             })
             createdAt: Date | null;
 
-            @Field(() => Number,{ nullable: true })
             @Column('integer', {
               name: 'credits', nullable: true, default: () => 0,
             })
             credits: number | null;
 
-            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'first_name', nullable: true,
             })
             firstName: string | null;
 
-            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'full_text', nullable: true,
             })
             fullText: string | null;
 
-            @Field(() => [String],{ nullable: true })
             @Column('text', {
               name: 'hobbies', nullable: true,
             })
             hobbies: string[] | null;
 
-            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'last_name', nullable: true,
             })
             lastName: string | null;
 
-            @Field(() => String,{ nullable: true })
             @Column('numeric', {
               name: 'rating', nullable: true, default: () => '0.88',
             })
             rating: string | null;
 
-            @Field(() => ID)
             @Column('uuid', {
               name: 'slug', primary: true,
             })
             slug: string;
 
-            @Field(() => Date,{ nullable: true })
             @Column('timestamp with time zone', {
               name: 'updated_at', nullable: true,
             })
@@ -122,61 +112,51 @@ describe('serializeColumns', () => {
 
     it('serializes with @Field()', () => {
       expect(serializeColumns(User, { graphql: true })).toMatchInlineSnapshot(`
-        "  @Field(() => Boolean,{ nullable: true })
-          @Column('boolean', {
+        "  @Column('boolean', {
             name: 'connected', nullable: true,
           })
           connected: boolean | null;
 
-          @Field(() => Date,{ nullable: true })
           @Column('timestamp with time zone', {
             name: 'created_at', nullable: true, default: () => 'now()',
           })
           createdAt: Date | null;
 
-          @Field(() => Number,{ nullable: true })
           @Column('integer', {
             name: 'credits', nullable: true, default: () => 0,
           })
           credits: number | null;
 
-          @Field(() => String,{ nullable: true })
           @Column('character varying', {
             name: 'first_name', nullable: true,
           })
           firstName: string | null;
 
-          @Field(() => String,{ nullable: true })
           @Column('character varying', {
             name: 'full_text', nullable: true,
           })
           fullText: string | null;
 
-          @Field(() => [String],{ nullable: true })
           @Column('text', {
             name: 'hobbies', nullable: true,
           })
           hobbies: string[] | null;
 
-          @Field(() => String,{ nullable: true })
           @Column('character varying', {
             name: 'last_name', nullable: true,
           })
           lastName: string | null;
 
-          @Field(() => String,{ nullable: true })
           @Column('numeric', {
             name: 'rating', nullable: true, default: () => '0.88',
           })
           rating: string | null;
 
-          @Field(() => ID)
           @Column('uuid', {
             name: 'slug', primary: true,
           })
           slug: string;
 
-          @Field(() => Date,{ nullable: true })
           @Column('timestamp with time zone', {
             name: 'updated_at', nullable: true,
           })

@@ -1,9 +1,9 @@
 import { Client } from 'pg';
 import PgTools from 'pgtools';
-import { nfcall } from 'q';
 import onExit from 'signal-exit';
 import { generateMockTables } from '../test/fixtures/MockData';
 import { run as dropDatabase } from './dropDatabase';
+import { promisify } from 'util';
 
 export async function run(watch: boolean) {
   const database = 'superluminal-test';
@@ -42,7 +42,8 @@ export async function run(watch: boolean) {
   console.log('Creating database', database);
 
   try {
-    await nfcall(PgTools.createdb, config, database);
+    const createDB = promisify(PgTools.createdb);
+    await createDB(config, database);
 
     console.log('Database', database, 'created');
   } catch (error) {

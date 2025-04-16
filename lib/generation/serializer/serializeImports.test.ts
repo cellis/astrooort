@@ -29,17 +29,9 @@ describe('serializeImports', () => {
   it('serializes the imports properly', () => {
     /* eslint-disable max-len */
     expect(serializeImports(User)).toMatchInlineSnapshot(`
-      "import { BaseEntity, Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
-      import { Account } from './Account';
-      import { Photo } from './Photo';
-      import { Shipment } from './Shipment';
-      import { Transaction } from './Transaction';
+      "import { BaseEntity, Column, Entity, Index } from 'typeorm';
       "
     `);
     /* eslint-enable max-len */
-  });
-
-  it('serializes the graphql imports properly', () => {
-    expect(serializeImports(User, { graphql: true })).toMatchSnapshot();
   });
 });

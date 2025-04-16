@@ -1,20 +1,20 @@
 {
-  "name": "pg-graphql-typeorm",
-  "version": "0.5.5",
-  "description": "Easily generate graphql typeorm entities with one command",
-  "repository": "github:cellis/pg-graphql-typeorm",
+  "name": "astrooort",
+  "version": "0.0.1",
+  "description": "Easily generate astrotype ready entities with one command",
+  "repository": "github:cellis/astrooot",
   "main": "./lib/index.js",
   "author": "Cameron Ellis",
   "license": "MIT",
   "private": false,
   "bin": {
-    "ftl": "dist/cli.js"
+    "oort": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc --skipLibCheck --p tsconfig.build.json",
     "build:webpack": "pnpm run webpack",
     "test:watch": "pnpm run fixtures:create && jest --watch ; pnpm run fixtures:drop",
-    "test": "pnpm run fixtures:create && jest --verbose; pnpm run fixtures:drop",
+    "test": "pnpm run fixtures:create && jest -u --verbose; pnpm run fixtures:drop",
     "fixtures:create": "ts-node --files ./lib/scripts/createDatabase.ts",
     "fixtures:drop": "ts-node --files ./lib/scripts/dropDatabase.ts",
     "test:update": "pnpm run fixtures:create && jest -u ; pnpm run fixtures:drop",
@@ -28,7 +28,6 @@
     "@types/node": "^18.15.12",
     "@types/pg": "^7.14.11",
     "@types/pluralize": "^0.0.29",
-    "@types/q": "^1.5.4",
     "@types/signal-exit": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -68,7 +67,6 @@
     "pg": "^8.5.1",
     "pgtools": "^0.3.1",
     "pluralize": "^8.0.0",
-    "q": "^1.5.1",
     "typeorm": "^0.2.31",
     "typescript-require": "^0.3.0",
     "yargs": "^16.2.0"

@@ -9,20 +9,20 @@ describe('loadConfig', () => {
   describe('ts config', () => {
     beforeEach(() => {
       jest.mock(
-        resolve(process.cwd(), '.ftlrc.ts'),
+        resolve(process.cwd(), '.oortrc.ts'),
         () => ({ default: mockFtlts }),
         {
           virtual: true,
         }
       );
     });
-    it('loads the Typescript config from .ftlrc.ts', async () => {
+    it('loads the Typescript config from .oortrc.ts', async () => {
       const actualFtlTsRc = await mockFtlts();
       const loadedFtlTsRc = await loadConfig();
       expect(loadedFtlTsRc).toEqual(actualFtlTsRc);
     });
     afterAll(() => {
-      jest.unmock(resolve(process.cwd(), '.ftlrc.ts'));
+      jest.unmock(resolve(process.cwd(), '.oort.ts'));
     });
   });
 });

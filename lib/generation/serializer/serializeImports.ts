@@ -11,8 +11,8 @@ const getPartial = (imp: Import, importName: string) => {
   return partial;
 };
 
-export default (model: Superluminal.Model, options?: Superluminal.Args) => {
-  const imp0rts = handleImports(model, options?.graphql);
+export default (model: Superluminal.Model) => {
+  const imp0rts = handleImports(model);
 
   const sortedImports = Object.keys(imp0rts).sort();
 

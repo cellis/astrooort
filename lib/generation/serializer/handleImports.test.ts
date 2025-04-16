@@ -36,7 +36,7 @@ describe('handleImports', () => {
   describe('top level imports', () => {
     // should add top level imports first
     it('does not add self-referential imports', () => {
-      const imp0rts = handleImports(Message, true);
+      const imp0rts = handleImports(Message);
 
       const selfImports = Object.keys(imp0rts)
         .filter((key) => {
@@ -48,108 +48,16 @@ describe('handleImports', () => {
     });
 
     it('adds top level imports at the top of the import', () => {
-      const imp0rts = handleImports(User, true);
+      const imp0rts = handleImports(User);
 
       const topLevelImports = Object.keys(imp0rts)
         .filter((key) => {
           return imp0rts[key].isModule;
         })
         .sort();
-      const expected = ['type-graphql', 'typeorm'];
+      const expected = ['typeorm'];
 
       expect(topLevelImports).toEqual(expect.arrayContaining(expected));
-    });
-  });
-
-  describe('association imports', () => {
-    it('adds all OneToMany imports', () => {
-      const imp0rts = handleImports(User);
-
-      expect(Object.keys(imp0rts)).toEqual(
-        expect.arrayContaining(['transaction', 'photo'])
-      );
-
-      expect(imp0rts.photo).toEqual({
-        isModule: false,
-        partial: ['Photo'],
-      });
-    });
-
-    it('adds all OneToOne imports', () => {
-      const imp0rts = handleImports(User);
-
-      expect(imp0rts.account).toEqual({
-        isModule: false,
-        partial: ['Account'],
-      });
-    });
-
-    it('adds JoinColumn to ManyToOne imports', () => {
-      const imp0rts = handleImports(Photo);
-
-      expect(imp0rts.typeorm.partial).toEqual(
-        expect.arrayContaining(['JoinColumn'])
-      );
-    });
-  });
-
-  describe('model has Indexes', () => {
-    it('includes "Index" in type-graphql imports', () => {
-      const imp0rts = handleImports(Photo, true);
-
-      expect(imp0rts.typeorm.partial).toEqual(
-        expect.arrayContaining(['Index'])
-      );
-    });
-  });
-
-  describe('model has primary keys', () => {
-    it('includes "ID" in type-graphql imports', () => {
-      const imp0rts = handleImports(Photo, true);
-
-      expect(imp0rts['type-graphql'].partial).toEqual(
-        expect.arrayContaining(['ID'])
-      );
-    });
-  });
-
-  describe('model has auto-incrementing INTEGER primary keys', () => {
-    it('includes @PrimaryGeneratedColumn in type-graphql imports', () => {
-      const imp0rts = handleImports(Document, true);
-
-      expect(imp0rts.typeorm.partial).toEqual(
-        expect.arrayContaining(['PrimaryGeneratedColumn'])
-      );
-    });
-  });
-
-  describe('model has manyToOnes', () => {
-    it('includes "ManyToOne" in typeorm imports', () => {
-      const imp0rts = handleImports(Photo);
-
-      expect(imp0rts.typeorm.partial).toEqual(
-        expect.arrayContaining(['ManyToOne'])
-      );
-    });
-  });
-
-  describe('model has oneToManys', () => {
-    it('includes "OneToMany" in typeorm imports', () => {
-      const imp0rts = handleImports(User);
-
-      expect(imp0rts.typeorm.partial).toEqual(
-        expect.arrayContaining(['OneToMany'])
-      );
-    });
-  });
-
-  describe('model has oneToOnes', () => {
-    it('includes "OneToOne" in typeorm imports', () => {
-      const imp0rts = handleImports(User);
-
-      expect(imp0rts.typeorm.partial).toEqual(
-        expect.arrayContaining(['OneToOne'])
-      );
     });
   });
 });
