@@ -20,7 +20,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     const cwd = process.cwd();
     try {
         // eslint-disable-next-line
-        configFunction = require(path_1.resolve(cwd, '.ftlrc.ts')).default;
+        configFunction = require(path_1.resolve(cwd, '.oortrc.ts')).default;
         if (configFunction) {
             return yield configFunction();
         }
@@ -28,7 +28,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) { }
     if (!configFunction) {
         try {
-            configFunction = require(path_1.resolve(cwd, '.ftlrc.js'));
+            configFunction = require(path_1.resolve(cwd, '.oortrc.js'));
         }
         catch (err) { }
     }

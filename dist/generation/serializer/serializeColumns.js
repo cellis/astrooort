@@ -18,12 +18,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const resolveType_1 = __importStar(require("../resolveType"));
-const resolveTypeGraphqlType_1 = __importDefault(require("../resolveTypeGraphqlType"));
 const utils_1 = require("./utils");
 const serializeColumn = (column, existingColumns, options) => {
     const normalizedColumnName = utils_1.getColumnName(column.name, column.array);
@@ -56,21 +52,15 @@ const serializeColumn = (column, existingColumns, options) => {
     }
     const nullType = column.nullable ? ' | null' : '';
     // prettier-ignore
-    const resolvedGraphqlType = resolveTypeGraphqlType_1.default(column);
-    const graphqlReturn = resolvedGraphqlType.length
-        ? `() => ${resolvedGraphqlType}`
-        : '';
     let serialized;
     if (column.primary && resolveType_1.default(column.dataType) === 'number') {
         serialized = [
-            (options === null || options === void 0 ? void 0 : options.graphql) ? `  @Field(${graphqlReturn}${column.nullable ? ',{ nullable: true }' : ''})` : '',
             '  @PrimaryGeneratedColumn()',
             `  ${normalizedColumnName}: ${resolveType_1.default(column.dataType, column.array)}${nullType};`,
         ];
     }
     else {
         serialized = [
-            (options === null || options === void 0 ? void 0 : options.graphql) ? `  @Field(${graphqlReturn}${column.nullable ? ',{ nullable: true }' : ''})` : '',
             `  @Column('${resolveType_1.resolveColumnType(column.dataType)}', {`,
             `    ${columnBody.join(', ')},`,
             '  })',

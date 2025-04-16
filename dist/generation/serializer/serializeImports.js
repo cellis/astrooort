@@ -15,8 +15,8 @@ const getPartial = (imp, importName) => {
     }
     return partial;
 };
-exports.default = (model, options) => {
-    const imp0rts = handleImports_1.default(model, options === null || options === void 0 ? void 0 : options.graphql);
+exports.default = (model) => {
+    const imp0rts = handleImports_1.default(model);
     const sortedImports = Object.keys(imp0rts).sort();
     const topLevelImports = sortedImports
         .filter((i) => imp0rts[i].isModule)

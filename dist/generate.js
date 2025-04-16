@@ -17,7 +17,6 @@ const path_1 = require("path");
 const loadConfig_1 = __importDefault(require("./config/loadConfig"));
 const postgresDriver_1 = __importDefault(require("./drivers/postgresDriver"));
 const createModels_1 = __importDefault(require("./generation/createModels"));
-const createRelationships_1 = __importDefault(require("./generation/createRelationships"));
 const serialize_1 = __importDefault(require("./generation/serializer/serialize"));
 const serializeIndexFile_1 = __importDefault(require("./generation/serializer/serializeIndexFile"));
 const utils_1 = require("./generation/serializer/utils");
@@ -30,7 +29,7 @@ function generate(checkHashes = true) {
             const yargsConfig = processYargs_1.default();
             const fileConfig = yield loadConfig_1.default();
             const config = Object.assign(Object.assign({}, fileConfig), yargsConfig); // Prefer yargs values
-            const { host, port, schemas: schemasRaw, database, graphql, output = path_1.resolve(process.cwd(), 'ftl-models'), } = config;
+            const { host, port, schemas: schemasRaw, database, graphql, output = path_1.resolve(process.cwd(), 'oort-models'), } = config;
             const schemas = (schemasRaw === null || schemasRaw === void 0 ? void 0 : schemasRaw.split(',')) || ['public'];
             const client = postgresDriver_1.default({
                 host,
@@ -45,7 +44,7 @@ function generate(checkHashes = true) {
                 manyToOnes: {},
             };
             const { hashes } = yield createModels_1.default(models, introspection, config, checkHashes);
-            createRelationships_1.default(models, introspection, associationMapping, config);
+            // createRelationships(models, introspection, associationMapping,config);
             for (const [modelName, model] of Object.entries(models)) {
                 const serialized = serialize_1.default(model, models, { graphql: !!graphql }, associationMapping);
                 const fileName = utils_1.PascalCase(modelName);

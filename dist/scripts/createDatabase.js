@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = void 0;
 const pg_1 = require("pg");
 const pgtools_1 = __importDefault(require("pgtools"));
-const q_1 = require("q");
 const signal_exit_1 = __importDefault(require("signal-exit"));
 const MockData_1 = require("../test/fixtures/MockData");
 const dropDatabase_1 = require("./dropDatabase");
+const util_1 = require("util");
 function run(watch) {
     return __awaiter(this, void 0, void 0, function* () {
         const database = 'superluminal-test';
@@ -43,7 +43,8 @@ function run(watch) {
         }
         console.log('Creating database', database);
         try {
-            yield q_1.nfcall(pgtools_1.default.createdb, config, database);
+            const createDB = util_1.promisify(pgtools_1.default.createdb);
+            yield createDB(config, database);
             console.log('Database', database, 'created');
         }
         catch (error) {

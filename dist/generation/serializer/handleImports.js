@@ -4,39 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const resolveType_1 = __importDefault(require("../resolveType"));
-const utils_1 = require("./utils");
-const handleImports = (model, graphql) => {
+const handleImports = (model) => {
     // serialized
     const imp0rts = {};
     const typeormImports = ['BaseEntity', 'Column', 'Entity'];
-    if (model.manyToOnes) {
-        typeormImports.push('ManyToOne', 'JoinColumn');
-        for (const manyToOneImport of Object.keys(model.manyToOnes)) {
-            imp0rts[manyToOneImport] = {
-                isModule: false,
-                partial: [utils_1.PascalCase(manyToOneImport)],
-            };
-        }
-    }
-    if (model.oneToManys) {
-        typeormImports.push('OneToMany');
-        for (const oneToManyImport of Object.keys(model.oneToManys)) {
-            imp0rts[oneToManyImport] = {
-                isModule: false,
-                partial: [utils_1.PascalCase(oneToManyImport)],
-            };
-        }
-    }
-    if (model.oneToOnes) {
-        typeormImports.push('OneToOne');
-        for (const oneToOneImport of Object.keys(model.oneToOnes)) {
-            imp0rts[oneToOneImport] = {
-                isModule: false,
-                partial: [utils_1.PascalCase(oneToOneImport)],
-            };
-        }
-    }
-    const typeGraphqlImports = ['ObjectType', 'Field'];
     if (model.primaryKeys) {
         model.primaryKeys.forEach((pk) => {
             const column = model.columns[pk];
@@ -47,18 +18,9 @@ const handleImports = (model, graphql) => {
                 typeormImports.push('PrimaryGeneratedColumn');
             }
         });
-        if (graphql) {
-            typeGraphqlImports.push('ID');
-        }
     }
     if (model.indexes) {
         typeormImports.push('Index');
-    }
-    if (graphql) {
-        imp0rts['type-graphql'] = {
-            isModule: true,
-            partial: typeGraphqlImports,
-        };
     }
     imp0rts.typeorm = {
         isModule: true,

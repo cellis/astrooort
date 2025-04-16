@@ -24,11 +24,15 @@ const handleForeignNonPrimaryKey = (source, fk, target) => {
             break;
         }
         if (!target) {
-            console.error(`${source === null || source === void 0 ? void 0 : source.name} has a fk in a target of ${fk.targetColumns}`);
+            // console.error(
+            //   `${source?.name} has a fk in a target of ${fk.targetColumns}`
+            // );
             continue;
         }
         if (!source) {
-            console.error(`${target.name} has a fk in a source of ${fk.sourceColumns}`);
+            // console.error(
+            //   `${target.name} has a fk in a source of ${fk.sourceColumns}`
+            // );
             continue;
         }
         if (!target.oneToManys)

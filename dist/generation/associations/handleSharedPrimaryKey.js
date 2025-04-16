@@ -40,13 +40,13 @@ const handleSharedPrimaryKey = (source, fk, target) => {
     const intersectingPrimaries = {};
     if (!source || !target || !fk) {
         if (!fk) {
-            console.error(`fk is undefined`);
+            // console.error(`fk is undefined`);
         }
         if (!source && target) {
-            console.error(`${target.name} has a fk in a target of ${fk === null || fk === void 0 ? void 0 : fk.targetColumns}`);
+            // console.error(`${target.name} has a fk in a target of ${fk?.targetColumns}`);
         }
         if (!target && source) {
-            console.error(`${source.name} has a fk in a target of ${fk === null || fk === void 0 ? void 0 : fk.targetColumns}`);
+            // console.error(`${source.name} has a fk in a target of ${fk?.targetColumns}`);
         }
         return;
     }

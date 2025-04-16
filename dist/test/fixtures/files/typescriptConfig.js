@@ -10,16 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
-    const config = {
-        graphqlModels: {
-            exclude: {
-                user: true,
-            },
-            excludeSchemas: {
-                'superluminal-private': true,
-            },
-        },
-    };
+    const config = {};
     return config;
 });
 //# sourceMappingURL=typescriptConfig.js.map

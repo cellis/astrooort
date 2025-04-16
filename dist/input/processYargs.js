@@ -29,12 +29,6 @@ function processYargs() {
             alias: 's',
             type: 'string',
         },
-        graphql: {
-            describe: 'Generate graphql field annotations?',
-            default: true,
-            type: 'boolean',
-            alias: 'g',
-        },
         output: {
             describe: 'Relative directory to place the output',
             default: './ftl/entities',
@@ -43,14 +37,13 @@ function processYargs() {
         },
     })
         .help();
-    const { host, port, schemas, database, output, graphql } = argv;
+    const { host, port, schemas, database, output } = argv;
     return {
         host,
         port,
         schemas,
         database,
         output,
-        graphql,
     };
 }
 exports.default = processYargs;

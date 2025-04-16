@@ -11,10 +11,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const handleForeignNonPrimaryKey2 = (source, fk, target, associationMapping) => {
     if (!target || !source) {
         if (!target && source) {
-            console.error(`${source === null || source === void 0 ? void 0 : source.name} has a fk in a target of ${fk.targetColumns}`);
+            // console.error(
+            //   `${source?.name} has a fk in a target of ${fk.targetColumns}`
+            // );
         }
         if (!source && target) {
-            console.error(`${target.name} has a fk in a source of ${fk.sourceColumns}`);
+            // console.error(
+            //   `${target.name} has a fk in a source of ${fk.sourceColumns}`
+            // );
         }
         return;
     }
