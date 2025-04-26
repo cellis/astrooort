@@ -88,7 +88,7 @@ describe('createModel', () => {
     });
 
     it('handles column array types properly', () => {
-      expect(User.columns['hobbies'].type).toBe('string[]');
+      expect(User.columns['hobbies'].type).toBe('Array<string>');
     });
   });
 });

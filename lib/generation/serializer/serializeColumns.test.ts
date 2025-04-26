@@ -85,7 +85,7 @@ describe('serializeColumns', () => {
             @Column('text', {
               name: 'hobbies', nullable: true,
             })
-            hobbies: string[] | null;
+            hobbies: Array<string> | null;
 
             @Column('character varying', {
               name: 'last_name', nullable: true,
@@ -95,7 +95,7 @@ describe('serializeColumns', () => {
             @Column('numeric', {
               name: 'rating', nullable: true, default: () => '0.88',
             })
-            rating: string | null;
+            rating: number | string | null;
 
             @Column('uuid', {
               name: 'slug', primary: true,
@@ -140,7 +140,7 @@ describe('serializeColumns', () => {
           @Column('text', {
             name: 'hobbies', nullable: true,
           })
-          hobbies: string[] | null;
+          hobbies: Array<string> | null;
 
           @Column('character varying', {
             name: 'last_name', nullable: true,
@@ -150,7 +150,7 @@ describe('serializeColumns', () => {
           @Column('numeric', {
             name: 'rating', nullable: true, default: () => '0.88',
           })
-          rating: string | null;
+          rating: number | string | null;
 
           @Column('uuid', {
             name: 'slug', primary: true,
@@ -195,7 +195,7 @@ describe('serializeColumns', () => {
         @Column('text', {
           name: 'hobbies', nullable: true,
         })
-        hobbies: string[] | null;
+        hobbies: Array<string> | null;
 
         @Column('character varying', {
           name: 'last_name', nullable: true,
@@ -205,7 +205,7 @@ describe('serializeColumns', () => {
         @Column('numeric', {
           name: 'rating', nullable: true, default: () => '0.88',
         })
-        rating: string | null;
+        rating: number | string | null;
 
         @Column('uuid', {
           name: 'slug', primary: true,

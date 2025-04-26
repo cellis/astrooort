@@ -40,6 +40,8 @@ function resolveType(type, isArray) {
             break;
         case 'decimal':
         case 'numeric':
+            resolved = 'number | string';
+            break;
         case 'text':
             resolved = 'string';
             break;
@@ -60,7 +62,7 @@ function resolveType(type, isArray) {
             resolved = 'string';
     }
     if (isArray) {
-        resolved += '[]';
+        resolved = 'Array<' + resolved + '>';
     }
     return resolved;
 }

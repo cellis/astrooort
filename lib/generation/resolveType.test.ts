@@ -37,8 +37,8 @@ describe('resolveType', () => {
       expect(resolveType('integer')).toBe('number');
     });
 
-    it("resolves 'decimal' to number", () => {
-      expect(resolveType('decimal')).toBe('string');
+    it("resolves 'decimal' to number or string", () => {
+      expect(resolveType('decimal')).toBe('number | string');
     });
 
     it("resolves 'timestamp without time zone' to Date", () => {
@@ -77,8 +77,20 @@ describe('resolveType', () => {
       expect(resolveType('double precision')).toBe('number');
     });
 
-    it("resolves 'text[]' to string[]", () => {
-      expect(resolveType('text', true)).toBe('string[]');
+    it("resolves 'text[]' to Array<string>", () => {
+      expect(resolveType('text', true)).toBe('Array<string>');
+    });
+
+    it("resolves 'decimal[]' to Array<number | string>", () => {
+      expect(resolveType('decimal', true)).toBe('Array<number | string>');
+    });
+
+    it("resolves 'numeric[]' to Array<number | string>", () => {
+      expect(resolveType('numeric', true)).toBe('Array<number | string>');
+    });
+
+    it("resolves 'numeric' to number or string", () => {
+      expect(resolveType('numeric')).toBe('number | string');
     });
   });
 });

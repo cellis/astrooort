@@ -53,6 +53,8 @@ function resolveType(type: string, isArray?: boolean): ResolvedType {
       break;
     case 'decimal':
     case 'numeric':
+      resolved = 'number | string';
+      break;
     case 'text':
       resolved = 'string';
       break;
@@ -74,7 +76,7 @@ function resolveType(type: string, isArray?: boolean): ResolvedType {
   }
 
   if (isArray) {
-    resolved += '[]';
+    resolved = 'Array<' + resolved + '>';
   }
 
   return resolved as ResolvedType;
