@@ -13,7 +13,21 @@ describe('normalizeDefaultValue', () => {
     });
   });
 });
+
+
 describe('resolveType', () => {
+  describe('type: json', () => {
+    it('resolves to string | Record<string,any>', () => {
+      expect(resolveType('json')).toBe('string | Record<string,any>');
+    });
+  });
+
+  describe('type: jsonb', () => {
+    it('resolves to string | Record<string,any>', () => {
+      expect(resolveType('jsonb')).toBe('string | Record<string,any>');
+    });
+  });
+
   describe('type: text', () => {
     it('resolves to string', () => {
       expect(resolveType('text')).toBe('string');

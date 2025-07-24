@@ -7,7 +7,8 @@ type ResolvedType =
   | 'uuid'
   | 'Date[]'
   | 'boolean'
-  | 'boolean[]';
+  | 'boolean[]'
+  | 'Record<string,any>'
 
 export function normalizeDefaultValue(value: string) {
   if (value.includes('::')) {
@@ -33,6 +34,8 @@ const validTypes = {
   'timestamp with time zone': true,
   timestamp: true,
   Date: true,
+  'jsonb': true,
+  'json': true,
 };
 
 type ValidColumnType = keyof typeof validTypes;
@@ -71,12 +74,16 @@ function resolveType(type: string, isArray?: boolean): ResolvedType {
     case 'timestamp':
       resolved = 'Date';
       break;
+    case 'json':
+    case 'jsonb':
+      resolved = 'string | Record<string,any>';
+      break;
     default:
       resolved = 'string';
   }
 
   if (isArray) {
-    resolved = 'Array<' + resolved + '>';
+    resolved = `Array<${resolved}>`;
   }
 
   return resolved as ResolvedType;

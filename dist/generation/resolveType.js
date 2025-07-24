@@ -24,6 +24,8 @@ const validTypes = {
     'timestamp with time zone': true,
     timestamp: true,
     Date: true,
+    'jsonb': true,
+    'json': true,
 };
 function resolveColumnType(type) {
     if (validTypes[type]) {
@@ -58,11 +60,15 @@ function resolveType(type, isArray) {
         case 'timestamp':
             resolved = 'Date';
             break;
+        case 'json':
+        case 'jsonb':
+            resolved = 'string | Record<string,any>';
+            break;
         default:
             resolved = 'string';
     }
     if (isArray) {
-        resolved = 'Array<' + resolved + '>';
+        resolved = `Array<${resolved}>`;
     }
     return resolved;
 }

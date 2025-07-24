@@ -21,11 +21,20 @@
         "name": "Debug CLI",
         "type": "node",
         "request": "launch",
+        "runtimeVersion": "20.18.2",
+        "runtimeExecutable": "tsx",
         "program": "${workspaceFolder}/lib/cli.ts",
-        "preLaunchTask": "npm: build",
-        "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+        "localRoot": null,
+        "cwd": "${workspaceFolder}",
         "console": "integratedTerminal",
-        "args": ["-d","awaycommerce", "-s","awaycommerce,awaycommerce_private"]
+        "skipFiles": [
+          // Node.js internal core modules
+          "<node_internals>/**",
+
+          // Ignore all dependencies (optional)
+          "${workspaceFolder}/api/node_modules/**"
+        ],
+        "runtimeArgs": ["-d","facade", "-s","facade,facade_private", "-o", "/Users/cameronellis/work/facade/api/src/generated/entities"],
       }
   ]
 } 
