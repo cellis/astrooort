@@ -33,16 +33,26 @@ function processYargs(): Superluminal.Args {
         alias: 'o',
         type: 'string',
       },
+      'use-env': {
+        describe: [
+          'Use environment variables ',
+          '(DB_HOST, DB_PORT, DB_NAME, DB_SCHEMAS)',
+          'as defaults'].join('\s'),
+        default: false,
+        type: 'boolean',
+      },
     })
     .help();
 
-  const { host, port, schemas, database, output } = argv;
+  const { host, port, schemas, database, output, useEnv } = argv;
 
   return {
-    host,
-    port,
-    schemas,
-    database,
+    host: useEnv && process.env.DB_HOST ? process.env.DB_HOST : host,
+    port: useEnv && process.env.DB_PORT ? 
+      parseInt(process.env.DB_PORT, 10) : port,
+    schemas: useEnv && process.env.DB_SCHEMAS ? 
+      process.env.DB_SCHEMAS : schemas,
+    database: useEnv && process.env.DB_NAME ? process.env.DB_NAME : database,
     output,
   };
 }

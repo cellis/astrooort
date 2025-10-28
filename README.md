@@ -1,25 +1,66 @@
 ## Astrooort (pg-graphql-typeorm without the graphql, typegraphql, just basic typeorm entities)
 
+A PostgreSQL to TypeORM entity generator with intelligent caching for fast incremental builds.
+
 ### Usage
 
+Basic usage:
+```bash
+oort -d my_database -s schema_1,schema_2,schema_n -o ./where/toput/entities
 ```
-yarn oort -d my_database -s schema_1,schema_2,schema_n -o ./where/toput/entities
+
+With connection options:
+```bash
+oort -h localhost -p 5432 -d my_database -s schema_1,schema_2 -o ./entities
 ```
+
+### Environment Variables
+
+Use the `--use-env` flag to read database connection settings from environment variables:
+
+```bash
+# With dotenv
+dotenv -- oort --use-env -d my_database -s schema_1,schema_2 -o ./entities
+
+# Or set variables directly
+DB_HOST=localhost DB_PORT=5433 oort --use-env -d my_db -s public -o ./entities
+```
+
+Supported environment variables:
+- `DB_HOST` - Database host (default: localhost)
+- `DB_PORT` - Database port (default: 5432)
+- `DB_NAME` - Database name (default: postgres)
+- `DB_SCHEMAS` - Comma-separated schemas (default: public)
+
+Example package.json script:
+```json
+"scripts": {
+  "gen:entities": "dotenv -- oort --use-env -d my_database -s schema_1,schema_2 -o ./src/generated/entities"
+}
+```
+
+### Caching & Performance
+
+Astrooort uses SHA-256 hashing to detect table changes and only regenerates entities when necessary. This makes subsequent runs extremely fast:
+
+- First run: Generates all entities
+- Subsequent runs: Only regenerates changed entities
+- Always maintains complete `index.ts` exports
+
+The hash cache is stored in `entities.json` alongside your generated entities.
 
 ### Usage with prettier (optional)
 
-```
-yarn oort -d my_database -s schema_1,schema_2,schema_n -o ./where/toput/entities && yarn typeorm:format
+```bash
+oort -d my_database -s schema_1,schema_2,schema_n -o ./where/toput/entities && yarn typeorm:format
 ```
 
 Note: `typeorm:format` is just package.json script with `prettier --write ./src/generated/entities/*.ts`
 
-I like to add a script to my package.json:
-
-```
+Complete example script:
+```json
 "scripts": {
-...
-  "build:entities": "yarn oort -d my_database -s schema_1,schema_2,schema_n -o ./src/generated/entities && yarn typeorm:format"
+  "build:entities": "oort -d my_database -s schema_1,schema_2,schema_n -o ./src/generated/entities && yarn typeorm:format"
 }
 ```
 

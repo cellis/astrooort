@@ -1,6 +1,6 @@
 {
   "name": "astrooort",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Easily generate astrotype ready entities with one command",
   "repository": "github:cellis/astrooot",
   "main": "./lib/index.js",
