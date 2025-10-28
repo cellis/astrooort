@@ -43,16 +43,18 @@ function generate(checkHashes = true) {
                 oneToManys: {},
                 manyToOnes: {},
             };
-            const { hashes } = yield createModels_1.default(models, introspection, config, checkHashes);
-            // createRelationships(models, introspection, associationMapping,config);
+            const { hashes, changedTables } = yield createModels_1.default(models, introspection, config, checkHashes);
+            try {
+                yield mkdir(output, { recursive: true });
+            }
+            catch (error) { }
             for (const [modelName, model] of Object.entries(models)) {
-                const serialized = serialize_1.default(model, models, { graphql: !!graphql }, associationMapping);
-                const fileName = utils_1.PascalCase(modelName);
-                try {
-                    yield mkdir(output, { recursive: true });
+                // Only write files for changed tables when hash checking is enabled
+                if (!checkHashes || changedTables.has(modelName)) {
+                    const serialized = serialize_1.default(model, models, { graphql: !!graphql }, associationMapping);
+                    const fileName = utils_1.PascalCase(modelName);
+                    yield writeFile(path_1.resolve(`${output}`, `${fileName}.ts`), serialized);
                 }
-                catch (error) { }
-                yield writeFile(path_1.resolve(`${output}`, `${fileName}.ts`), serialized);
             }
             const indexFile = serializeIndexFile_1.default(models);
             yield writeFile(path_1.resolve(`${output}`, 'index.ts'), indexFile);

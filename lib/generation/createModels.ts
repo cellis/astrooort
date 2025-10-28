@@ -46,6 +46,7 @@ export default async function createModels(
 ) {
   const { info, indexes } = introspection;
   const hashes: Record<string, string> = {};
+  const changedTables = new Set<string>();
 
   // Load existing hashes if available
   let existingHashes: Record<string, string> = {};
@@ -67,20 +68,25 @@ export default async function createModels(
     for (const [schemaName, schema] of Object.entries(info.schemas)) {
       if (schema.tables) {
         for (const [tableName, table] of Object.entries(schema.tables)) {
+          // Always create the model so the index.ts includes all tables
+          createModel(tableName, schemaName, table, models, indexes);
+
           if(checkHashes) {
             const hash = generateTableHash(table);
             hashes[tableName] = hash;
 
+            // Track which tables have changed
             if(existingHashes[tableName] !== hash) {
-              createModel(tableName, schemaName, table, models, indexes);
+              changedTables.add(tableName);
             }
           } else {
-            createModel(tableName, schemaName, table, models, indexes);
+            // If not checking hashes, mark all as changed
+            changedTables.add(tableName);
           }
         }
       }
     }
   }
 
-  return { models, hashes };
+  return { models, hashes, changedTables };
 }

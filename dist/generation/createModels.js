@@ -48,6 +48,7 @@ function createModels(models, introspection, config, checkHashes = true) {
     return __awaiter(this, void 0, void 0, function* () {
         const { info, indexes } = introspection;
         const hashes = {};
+        const changedTables = new Set();
         // Load existing hashes if available
         let existingHashes = {};
         const hashesPath = path_1.default.join(process.cwd(), config.output || '', 'entities.json');
@@ -63,21 +64,25 @@ function createModels(models, introspection, config, checkHashes = true) {
             for (const [schemaName, schema] of Object.entries(info.schemas)) {
                 if (schema.tables) {
                     for (const [tableName, table] of Object.entries(schema.tables)) {
+                        // Always create the model so the index.ts includes all tables
+                        createModel_1.default(tableName, schemaName, table, models, indexes);
                         if (checkHashes) {
                             const hash = generateTableHash(table);
                             hashes[tableName] = hash;
+                            // Track which tables have changed
                             if (existingHashes[tableName] !== hash) {
-                                createModel_1.default(tableName, schemaName, table, models, indexes);
+                                changedTables.add(tableName);
                             }
                         }
                         else {
-                            createModel_1.default(tableName, schemaName, table, models, indexes);
+                            // If not checking hashes, mark all as changed
+                            changedTables.add(tableName);
                         }
                     }
                 }
             }
         }
-        return { models, hashes };
+        return { models, hashes, changedTables };
     });
 }
 exports.default = createModels;

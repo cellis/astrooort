@@ -43,23 +43,31 @@ async function generate(checkHashes = true) {
       manyToOnes: {},
     };
 
-    const { hashes } = await createModels(models, introspection, config, checkHashes);
-    // createRelationships(models, introspection, associationMapping,config);
+    const { hashes, changedTables } = await createModels(
+      models, 
+      introspection, 
+      config, 
+      checkHashes
+    );
+
+    try {
+      await mkdir(output, { recursive: true });
+    } catch (error) {}
 
     for (const [modelName, model] of Object.entries(models)) {
-      const serialized = serialize(
-        model,
-        models,
-        { graphql: !!graphql },
-        associationMapping
-      );
+      // Only write files for changed tables when hash checking is enabled
+      if (!checkHashes || changedTables.has(modelName)) {
+        const serialized = serialize(
+          model,
+          models,
+          { graphql: !!graphql },
+          associationMapping
+        );
 
-      const fileName = PascalCase(modelName);
+        const fileName = PascalCase(modelName);
 
-      try {
-        await mkdir(output, { recursive: true });
-      } catch (error) {}
-      await writeFile(resolve(`${output}`, `${fileName}.ts`), serialized);
+        await writeFile(resolve(`${output}`, `${fileName}.ts`), serialized);
+      }
     }
 
     const indexFile = serializeIndexFile(models);
